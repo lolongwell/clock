@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    body{
+      width: 100%;
+      height: 100%;
+      background: orange;
+    }
+    .box{
+      width: 306px;
+      height: 306px;
+      position: relative;
+    }
+    .chassis{
+      width: 300px;
+      height: 300px;
+      border: 3px solid black;
+      position: relative;      
+      border-radius: 50%;
+      background: white;
+    }
+    .chassis span{
+      width: 2px;
+      height: 6px;
+      position: absolute;
+      top: 0;
+      left: 149px;
+      background: #666;
+      transform-origin:0 150px; 
+    }
+    .chassis span:nth-child(5n+1){
+      height: 10px;
+    }
+    .needle{
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      top: 145px;
+      left: 145px;
+    }
+    .center{
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      top:0;
+      left: 0;
+      background: #000;
+      border-radius: 50%;
+    }
+    .hours{
+      width: 4px;
+      height: 50px;
+      position: absolute;
+      left: 4px;
+      bottom: 8px;
+      background: black;
+      transform-origin: bottom;
+    }
+    .minutes{
+      width: 2px;
+      height: 80px;
+      position: absolute;
+      left: 5px;
+      bottom: 8px;
+      background: black;
+      transform-origin: bottom;
+    }
+    .seconds{
+      width: 1px;
+      height: 120px;
+      position: absolute;
+      left: 5px;
+      bottom: 8px;
+      background: red;
+      transform-origin: bottom;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="chassis">
+    </div>
+    <div class="needle">
+      <div class="hours"></div>
+      <div class="minutes"></div>
+      <div class="seconds"></div>
+      <div class="center"></div>
+    </div>
+  </div>
+  <script>
+    window.onload = function () {
+      var oChassis = document.body.querySelector('.chassis');
+      var oSeconds = document.body.querySelector('.seconds');
+      var oMinutes = document.body.querySelector('.minutes');
+      var oHours = document.body.querySelector('.hours');
+      
+      drowTick(oChassis);
+      move(oHours, oMinutes, oSeconds);
+
+      setInterval(function () {
+        move(oHours, oMinutes, oSeconds);
+      },1000)
+      
+      // 指针移动
+      function move(oHours, oMinutes, oSeconds) {
+        var oDate = new Date();
+        var s = oDate.getSeconds();
+        var m = oDate.getMinutes() + s/60;
+        var h = oDate.getHours()%12 + m/60;
+        console.log(s,m,h)
+        oSeconds.style.transform = "rotate(" + s*6 + "deg)"
+        oMinutes.style.transform = "rotate(" + m*6 + "deg)"
+        oHours.style.transform = "rotate(" + h*6*5 + "deg)"
+      }
+      // 批量创建刻度
+      function drowTick(obj) {
+        var str = '';
+        var run = 6;        
+        for (var i = 0; i < 60; i++) {
+          str += '<span style="transform:rotate(' + run*i + 'deg)"></span>'
+        }
+        obj.innerHTML = str;
+      }
+    }
+  </script>
+</body>
+</html>
