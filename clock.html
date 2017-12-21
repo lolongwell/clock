@@ -103,7 +103,7 @@
 
       oS.style.transform = 'rotate(' + 6*s + 'deg)'
       oM.style.transform = 'rotate(' + (6*m+s/60) + 'deg)'
-      oH.style.transform = 'rotate(' + (h%12*30+m/60) + 'deg)'
+      oH.style.transform = 'rotate(' + ((h%12+m/60)*30) + 'deg)'
     }
 
     // 刻度
